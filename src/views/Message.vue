@@ -22,14 +22,29 @@
                         <van-icon name="phone-circle" class="repair-icon" />
                     </div>
                 </div>
+                <div class="subject-condition">
+                    <div class="subject-title">
+                        <div class="title-left"><van-icon name="notes-o" />
+                            <h3>教室排课</h3>
+                        </div>
+                        <span>2022-2023学年（第7教学周）</span>
+                    </div>
+                    <div class="subject-content">
+                        <SubjectMessage v-if="!subjects"></SubjectMessage>
+                        <van-empty description="暂未排课" v-else />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import router from '../router';
+import { ref } from 'vue'
+import router from '../router'
+const subjects = ref(true)
 const submitError = () => {
+    
     router.push('/login')
 }
 </script>
@@ -40,10 +55,13 @@ const submitError = () => {
 }
 
 .message {
-    position: relative;
     background-color: #f5f5f5;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
 
     .room-msg-title {
         padding: 10px;
@@ -68,10 +86,8 @@ const submitError = () => {
     }
 
     .room-msg-content {
-        position: absolute;
-        top: 90px;
-        left: 50%;
-        transform: translateX(-50%);
+        margin-top: -200px;
+        min-height: 80vh;
 
         .content-msg {
             background-color: #fff;
@@ -128,6 +144,39 @@ const submitError = () => {
                 .repair-right {
                     .repair-icon {
                         font-size: 50px !important;
+                    }
+                }
+            }
+
+            .subject-condition {
+                margin-top: 20px;
+                background-color: #fff;
+                border-radius: 8px;
+                width: 90vw;
+
+                .subject-title {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    height: 50px;
+                    border-bottom: 1px solid #ddd;
+                    font-size: 14px;
+                    padding: 0 10px;
+
+                    .title-left {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100%;
+
+                        h3 {
+                            margin-left: 6px;
+                        }
+                    }
+
+
+                    span {
+                        color: #777;
                     }
                 }
             }

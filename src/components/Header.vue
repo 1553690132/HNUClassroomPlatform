@@ -16,25 +16,29 @@
 </script>
 
 <style lang="less" scoped>
-.room-msg-title {
-    padding: 10px;
-    height: 34vh;
-    background-color: #4187ec;
+.header {
+    width: 100%;
 
-    .title-content {
-        display: flex;
-        color: #fff;
-        align-items: center;
+    .room-msg-title {
+        padding: 10px;
+        height: 34vh;
+        background-color: #4187ec;
 
-        .logo-part {
-            margin-right: 10px;
+        .title-content {
+            display: flex;
+            color: #fff;
+            align-items: center;
+
+            .logo-part {
+                margin-right: 10px;
+            }
+
+            span {
+                font-size: 12px;
+                font-family: serif;
+            }
+
         }
-
-        span {
-            font-size: 12px;
-            font-family: serif;
-        }
-
     }
 }
 </style>

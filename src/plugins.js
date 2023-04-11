@@ -1,6 +1,8 @@
 import * as VueRouter from 'vue-router'
 import { createPinia } from 'pinia'
 import api from './api/index';
+import 'vant/es/notify/style'
+import 'vant/es/toast/style'
 
 export default {
     install: (app, options) => {

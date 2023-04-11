@@ -13,9 +13,9 @@
             <van-form @submit="onSubmit" class="loginForm">
                 <van-cell-group inset>
                     <van-space direction="vertical" fill :size="30">
-                        <van-field v-model="username" label="学号" name="用户名" placeholder="请输入教务系统学号" left-icon="contact"
+                        <van-field v-model="username" label="学号" name="username" placeholder="请输入教务系统学号" left-icon="contact"
                             :rules="[{ required: true, message: '请填写用户名' }]" />
-                        <van-field v-model="password" type="password" label="密码" name="密码" placeholder="请输入匹配密码"
+                        <van-field v-model="password" type="password" label="密码" name="password" placeholder="请输入匹配密码"
                             left-icon="sign" :rules="[{ required: true, message: '请填写密码' }]" />
                     </van-space>
                 </van-cell-group>
@@ -34,11 +34,15 @@
 
 <script setup>
 import { ref } from 'vue'
+import router from '../router'
+import { showToast } from 'vant'
 const username = ref('');
 const password = ref('');
 const onSubmit = (values) => {
-    console.log('submit', values);
-};
+    console.log(values)
+    showToast('登录成功');
+    router.replace('/home/message')
+}
 </script>
 
 <style lang="less" scoped>
@@ -101,9 +105,5 @@ const onSubmit = (values) => {
             text-align: center;
         }
     }
-}
-
-:deep(.van-space-item) {
-    border-bottom: 1px solid #ccc;
 }
 </style>

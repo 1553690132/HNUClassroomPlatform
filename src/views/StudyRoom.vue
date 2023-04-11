@@ -100,7 +100,7 @@ const showBuildingMsg = () => {
     }
 
     .studybody {
-        margin: 10px 0;
+        margin: 18px 0;
         width: 100%;
         display: flex;
         justify-content: center;

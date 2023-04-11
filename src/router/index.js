@@ -6,6 +6,7 @@ import Room from '../views/Room.vue'
 import Building from '../views/pages/Building.vue'
 import Detail from '../views/pages/Detail.vue'
 import Login from '../views/Login.vue'
+import Report from '../views/pages/Report.vue'
 
 const router = new createRouter({
     routes: [
@@ -45,6 +46,11 @@ const router = new createRouter({
             path: '/detail',
             component: Detail,
             name: 'Detail'
+        },
+        {
+            path: '/report',
+            component: Report,
+            name: 'Report'
         },
         {
             path: '/login',
