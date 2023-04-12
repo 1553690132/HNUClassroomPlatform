@@ -34,14 +34,20 @@
 
 <script setup>
 import { ref } from 'vue'
+import { loginInfoStore } from '../store/loginInfoStore'
 import router from '../router'
 import { showToast } from 'vant'
+const loginStore = loginInfoStore()
 const username = ref('');
 const password = ref('');
-const onSubmit = (values) => {
-    console.log(values)
-    showToast('登录成功');
-    router.replace('/home/message')
+const onSubmit = async (values) => {
+    await loginStore.getLoginInfos(values)
+    if (localStorage.getItem('token')) {
+        showToast('登录成功')
+        router.replace('/home/message')
+    } else {
+        showToast('登录失败!')
+    }
 }
 </script>
 

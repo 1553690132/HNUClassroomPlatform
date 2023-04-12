@@ -1,6 +1,6 @@
 <template>
     <div class="building">
-        <van-nav-bar title="理工一教室" left-arrow @click-left="onClickLeft" />
+        <van-nav-bar :title="buildingStore.nowBuildingInfo.name" left-arrow @click-left="onClickLeft" />
         <div class="building-part">
             <div class="search-title">
                 <img src="../../assets/img/banner_a.jpg" alt="">
@@ -37,8 +37,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, getCurrentInstance } from 'vue';
 import router from '../../router';
+import { buildingInfoStore } from '../../store/buildingInfoStore';
+const buildingStore = buildingInfoStore()
+const { proxy } = getCurrentInstance()
 const columns = [
     [
         { text: '周一', value: 'Monday' },
@@ -66,7 +69,6 @@ const columns = [
 const fieldValue = ref('');
 const showPicker = ref(false);
 const showBlank = ref(true)
-
 const onConfirm = ({ selectedOptions }) => {
     showPicker.value = false;
     fieldValue.value = `${selectedOptions[0].text}      ${selectedOptions[1].text}`

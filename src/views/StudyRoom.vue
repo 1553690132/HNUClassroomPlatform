@@ -2,69 +2,24 @@
     <div class="studyRoom">
         <Header></Header>
         <div class="studysearch">
-            <van-search v-model="searchwords" placeholder="请输入搜索关键词" shape="round" background="#4187ec" />
+            <van-search v-model="searchwords" placeholder="请输入搜索关键词" shape="round" background="#4187ec"
+                @search="searchBuilding" @clear="onClear" />
         </div>
         <div class="studybody">
             <div class="classroom">
                 <van-row>
-                    <van-col span="8" @click="showBuildingMsg">
+                    <van-col v-if="!showSearch" span="8" v-for="item in buildingList" :key="item.id"
+                        @click="showBuildingMsg(item)">
                         <div class="building">
                             <img src="../assets/img/building.png" alt="building">
-                            <span>理工一</span>
+                            <span>{{ item.name }}</span>
                         </div>
                     </van-col>
-                    <van-col span="8" @click="showBuildingMsg">
+                    <van-col v-else span="8" v-for="sItem in searchBuildingList" :key="sItem.id"
+                        @click="showBuildingMsg(sItem)">
                         <div class="building">
                             <img src="../assets/img/building.png" alt="building">
-                            <span>理工二</span>
-                        </div>
-                    </van-col>
-                    <van-col span="8" @click="showBuildingMsg">
-                        <div class="building">
-                            <img src="../assets/img/building.png" alt="building">
-                            <span>理工三</span>
-                        </div>
-                    </van-col>
-                    <van-col span="8" @click="showBuildingMsg">
-                        <div class="building">
-                            <img src="../assets/img/building.png" alt="building">
-                            <span>崇师楼</span>
-                        </div>
-                    </van-col>
-                    <van-col span="8" @click="showBuildingMsg">
-                        <div class="building">
-                            <img src="../assets/img/building.png" alt="building">
-                            <span>西语楼</span>
-                        </div>
-                    </van-col>
-                    <van-col span="8" @click="showBuildingMsg">
-                        <div class="building">
-                            <img src="../assets/img/building.png" alt="building">
-                            <span>人文楼</span>
-                        </div>
-                    </van-col>
-                    <van-col span="8" @click="showBuildingMsg">
-                        <div class="building">
-                            <img src="../assets/img/building.png" alt="building">
-                            <span>社科楼</span>
-                        </div>
-                    </van-col>
-                    <van-col span="8" @click="showBuildingMsg">
-                        <div class="building">
-                            <img src="../assets/img/building.png" alt="building">
-                            <span>体育楼</span>
-                        </div>
-                    </van-col>
-                    <van-col span="8" @click="showBuildingMsg">
-                        <div class="building">
-                            <img src="../assets/img/building.png" alt="building">
-                            <span>行知楼</span>
-                        </div>
-                    </van-col>
-                    <van-col span="8" @click="showBuildingMsg">
-                        <div class="building">
-                            <img src="../assets/img/building.png" alt="building">
-                            <span>研究生楼</span>
+                            <span>{{ sItem.name }}</span>
                         </div>
                     </van-col>
                 </van-row>
@@ -75,11 +30,33 @@
 
 <script setup>
 import router from '../router/index'
-import { ref } from 'vue'
-const searchwords = ref('')
-const showBuildingMsg = () => {
+import { ref, reactive, onMounted, getCurrentInstance } from 'vue'
+import { buildingInfoStore } from '../store/buildingInfoStore'
+const { proxy } = getCurrentInstance()
+const buildingStore = buildingInfoStore()
+const searchwords = ref(''), buildingList = reactive([]), searchBuildingList = reactive([]), showSearch = ref(false)
+const showBuildingMsg = (buildingMsg) => {
+    buildingStore.chooseBuilding(buildingMsg)
     router.push('/building')
 }
+const getBuildingList = async () => {
+    const res = await proxy.$api.building.getBuildingList()
+    buildingList.length = 0
+    buildingList.push(...res)
+}
+const searchBuilding = async () => {
+    const res = await proxy.$api.building.searchBuildingInfo(searchwords.value)
+    showSearch.value = true
+    searchBuildingList.length = 0
+    searchBuildingList.push(...res)
+}
+const onClear = () => {
+    searchBuildingList.length = 0
+    showSearch.value = false
+}
+onMounted(async () => {
+    await getBuildingList()
+})
 </script>
 
 <style lang="less" scoped>

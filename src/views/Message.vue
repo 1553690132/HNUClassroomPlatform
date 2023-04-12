@@ -44,8 +44,11 @@ import { ref } from 'vue'
 import router from '../router'
 const subjects = ref(true)
 const submitError = () => {
-    
-    router.push('/login')
+    if (!localStorage.getItem('token')) {
+        router.push('/login')
+    } else {
+        router.push('/report')
+    }
 }
 </script>
 
@@ -86,7 +89,7 @@ const submitError = () => {
     }
 
     .room-msg-content {
-        margin-top: -200px;
+        margin-top: -25vh;
         min-height: 80vh;
 
         .content-msg {
