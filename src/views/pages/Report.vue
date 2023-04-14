@@ -18,7 +18,7 @@
                     <van-field v-model="reportForm.details" name="details" label="故障情况" placeholder="请具体说明故障情况"
                         type="textarea" autosize maxlength="50" show-word-limit
                         :rules="[{ required: true, message: '请具体说明故障情况' }]" />
-                    <van-field name="uploader" label="凭证上传">
+                    <van-field name="uploader" label="凭证上传" :rules="[{ required: true, message: '请上传凭证图片' }]">
                         <template #input>
                             <van-uploader v-model="reportForm.pic" multiple :max-count="1" />
                         </template>
