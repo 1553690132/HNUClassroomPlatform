@@ -61,9 +61,9 @@ const onConfirm = ({ selectedOptions }) => {
 
 const onSubmit = async () => {
     const pic = reportForm.pic.map(p => p = p.file)[0]
-    const { data: res } = await proxy.$api.report.uploadImg(pic)
+    const res = await proxy.$api.report.uploadImg(pic)
     if (res.code !== 200) return showToast('图片上传异常!')
-    const _res = await proxy.$api.report.sendReport({ ...reportForm, pic: res.path })
+    const _res = await proxy.$api.report.sendReport({ ...reportForm, pic: res.data.path })
     if (_res.code !== 200) return showToast('申报失败！')
     showSuccessToast('申报成功')
     router.replace('/home')
@@ -73,6 +73,9 @@ const getReportType = async () => {
     const { data: res } = await proxy.$api.report.getReportType()
     types.length = 0
     types.push(...res.map(e => e = { ...e, text: e.name, value: e.id }))
+    types.sort((a, b) => {
+        return a.id - b.id
+    })
     console.log(types)
 }
 
