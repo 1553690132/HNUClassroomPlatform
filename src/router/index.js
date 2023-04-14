@@ -7,6 +7,7 @@ import Building from '../views/pages/Building.vue'
 import Detail from '../views/pages/Detail.vue'
 import Login from '../views/Login.vue'
 import Report from '../views/pages/Report.vue'
+import Personal from '../views/Personal.vue'
 
 const router = new createRouter({
     routes: [
@@ -34,6 +35,11 @@ const router = new createRouter({
                     path: 'message',
                     component: Message,
                     name: 'Message'
+                },
+                {
+                    path: 'personal',
+                    component: Personal,
+                    name: 'Personal'
                 }
             ]
         },

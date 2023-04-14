@@ -7,6 +7,7 @@
             <van-tabbar-item replace to="/home/room" icon="home-o">首页</van-tabbar-item>
             <van-tabbar-item replace to="/home/message" icon="more-o">详情</van-tabbar-item>
             <van-tabbar-item replace to="/home/studyroom" icon="search">教室</van-tabbar-item>
+            <van-tabbar-item replace to="/home/personal" icon="user-o">我的</van-tabbar-item>
         </van-tabbar>
     </div>
 </template>

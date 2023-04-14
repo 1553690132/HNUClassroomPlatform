@@ -1,17 +1,20 @@
 import { defineStore } from 'pinia'
+import { userInfoStore } from './userInfoStore'
 import api from '../api'
 
 export const loginInfoStore = defineStore('loginInfoStore', {
-    state: () => {
-        return {
-            username: '未登录',
-        }
-    },
     actions: {
         async getLoginInfos(data) {
-            const res = await api.login.loginProcess(data)
-            if (res.hasOwnProperty('data')) {
-                localStorage.setItem('token', res.data.token)
+            try {
+                const res = await api.login.loginProcess(data)
+                if (res.hasOwnProperty('data')) {
+                    const userStore = userInfoStore()
+                    localStorage.setItem('token', res.data.token)
+                    const { userInfo } = await api.login.getUserInfo()
+                    userStore.userInfo = { ...userInfo }
+                }
+            } catch (error) {
+                throw new Error(error)
             }
         }
     }

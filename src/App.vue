@@ -15,6 +15,8 @@
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 a {

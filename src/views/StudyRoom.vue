@@ -18,7 +18,7 @@
                     <van-col v-else span="8" v-for="sItem in searchBuildingList" :key="sItem.id"
                         @click="showBuildingMsg(sItem)">
                         <div class="building">
-                            <img src="../assets/img/building.png" alt="building">
+                            <img :src="building_img" alt="building">
                             <span>{{ sItem.name }}</span>
                         </div>
                     </van-col>
@@ -32,9 +32,11 @@
 import router from '../router/index'
 import { ref, reactive, onMounted, getCurrentInstance } from 'vue'
 import { buildingInfoStore } from '../store/buildingInfoStore'
+import { getImageUrl } from '../utils/common';
 const { proxy } = getCurrentInstance()
 const buildingStore = buildingInfoStore()
 const searchwords = ref(''), buildingList = reactive([]), searchBuildingList = reactive([]), showSearch = ref(false)
+const building_img = getImageUrl('building')
 const showBuildingMsg = (buildingMsg) => {
     buildingStore.chooseBuilding(buildingMsg)
     router.push('/building')

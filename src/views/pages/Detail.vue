@@ -3,13 +3,15 @@
         <van-nav-bar title="教室详情" left-arrow @click-left="onClickLeft" />
         <div class="msg-body">
             <RoomMessage></RoomMessage>
-            <img src="../../assets/img/footer.png" alt="footer">
+            <img :src="footer_img" alt="footer">
         </div>
     </div>
 </template>
 
 <script setup>
 import router from '../../router';
+import { getImageUrl } from '../../utils/common';
+const footer_img = getImageUrl('footer')
 const onClickLeft = () => {
     router.back()
 }
