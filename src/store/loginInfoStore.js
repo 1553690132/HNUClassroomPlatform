@@ -15,6 +15,7 @@ export const loginInfoStore = defineStore('loginInfoStore', {
                         userStore.userInfo = { ...userInfo, isFirstLogin: res.data.isFirstLogin }
                         sessionStorage.setItem('isFirstLogin', res.data.isFirstLogin)
                     }
+                    else userStore.userInfo = { ...userInfo }
                     sessionStorage.setItem('studentId', userInfo.studentId)
                 }
             } catch (error) {
