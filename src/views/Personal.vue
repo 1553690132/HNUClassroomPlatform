@@ -16,12 +16,12 @@
                         </div>
                     </div>
                     <div class="avatar-part">
-                        <img :src="avatar_img" alt="avatar">
+                        <img :src="userStore.userInfo.avatar" alt="avatar">
                     </div>
                 </div>
             </div>
             <section class="tools">
-                <img :src="repair_src" alt="notice">
+                <img :src="repair_src" alt="notice" @click="toCheckReport">
                 <div class="methods-part">
                     <div class="top-part">
                         <a href="javascript:;" class="l-choice">
@@ -49,11 +49,15 @@
 </template>
 
 <script setup>
+import router from '../router';
 import { onMounted } from 'vue'
 import { getImageUrl } from '../utils/common'
 import { userInfoStore } from '../store/userInfoStore'
 const userStore = userInfoStore()
-const avatar_img = getImageUrl('avatar'), repair_src = getImageUrl('btn_one'), bg_f_img = getImageUrl('bg_first'), bg_s_img = getImageUrl('bg_second')
+const repair_src = getImageUrl('btn_one'), bg_f_img = getImageUrl('bg_first'), bg_s_img = getImageUrl('bg_second')
+const toCheckReport = () => {
+    router.push('/check')
+}
 onMounted(async () => {
     await userStore.getUserInfos()
 })

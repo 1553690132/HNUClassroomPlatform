@@ -36,17 +36,17 @@
 import { ref } from 'vue'
 import { loginInfoStore } from '../store/loginInfoStore'
 import router from '../router'
-import { showToast } from 'vant'
+import { showSuccessToast, showFailToast } from 'vant'
 const loginStore = loginInfoStore()
 const username = ref('');
 const password = ref('');
 const onSubmit = async (values) => {
     await loginStore.getLoginInfos(values)
     if (localStorage.getItem('token')) {
-        showToast('登录成功')
+        showSuccessToast('登录成功')
         router.replace('/home/message')
     } else {
-        showToast('账号或密码错误!')
+        sessionStorage.getItem('errorType') ? showFailToast(sessionStorage.getItem('errorType')) : showFailToast('服务器异常，请稍后再试!')
     }
 }
 </script>
@@ -106,7 +106,8 @@ const onSubmit = async (values) => {
         .copyright {
             position: absolute;
             bottom: 10px;
-            width: 100%;
+            left: 50%;
+            transform: translateX(-50%);
             color: #aaa;
             text-align: center;
         }

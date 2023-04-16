@@ -19,6 +19,7 @@ axios.interceptors.response.use(response => {
 }, error => {
     // 登录失败
     if (error.response.status === 403) {
+        sessionStorage.setItem('errorType', error.response.data.msg)
         return error.response
     }
     // token错误

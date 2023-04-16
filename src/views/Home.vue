@@ -20,7 +20,7 @@ const active = ref(0)
 <style lang="less" scoped>
 .home {
     width: 100%;
-    min-height: 100%;
+    min-height: 100vh;
     background-color: #f5f5f5;
 
     .main-part {

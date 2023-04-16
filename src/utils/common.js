@@ -8,21 +8,23 @@ export function debounce(fn, delay) {
     }
 }
 
+export function throttle(fn, delay) {
+    let use = true
+    return function () {
+        if (use) {
+            setTimeout(() => {
+                fn.call(this)
+                use = true
+            }, delay);
+        }
+        use = false
+    }
+}
+
 export function getImageUrl(name) {
     return new URL(`../assets/img/${name}.png`, import.meta.url).href
 }
 
+export function checkPostion() {
 
-export function baseURLToURL(base) {
-
-}
-
-
-function base64toBlob(dataurl) {
-    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-    while (n--) {
-        u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new Blob([u8arr], { type: mime });
 }

@@ -8,6 +8,8 @@ import Detail from '../views/pages/Detail.vue'
 import Login from '../views/Login.vue'
 import Report from '../views/pages/Report.vue'
 import Personal from '../views/Personal.vue'
+import CheckReport from '../views/pages/CheckReport.vue'
+import ReportDetail from '../views/pages/ReportDetail.vue'
 
 const router = new createRouter({
     routes: [
@@ -62,6 +64,16 @@ const router = new createRouter({
             path: '/login',
             component: Login,
             name: 'Login'
+        },
+        {
+            path: '/check',
+            component: CheckReport,
+            name: 'CheckReport',
+        },
+        {
+            path: '/reportDetail',
+            component: ReportDetail,
+            name: 'ReportDetail'
         }
     ],
     history: createWebHashHistory()

@@ -18,6 +18,16 @@ const report = {
             'Content-type': 'multipart/form-data'
         })
         return res
+    },
+
+    async getReportList(params) {
+        const { data: res } = await request.get('front/class/report/mine', { params })
+        return res
+    },
+
+    async searchTypeName(id) {
+        const { data: res } = await request.get(`front/class/report/type/${id}`)
+        return res
     }
 }
 

@@ -86,7 +86,7 @@ onMounted(async () => {
 
 <style lang="less" scoped>
 .report {
-    height: 100%;
+    min-height: 100vh;
     width: 100%;
     background-color: #f5f5f5;
 

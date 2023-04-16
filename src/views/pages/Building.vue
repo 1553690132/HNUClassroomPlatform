@@ -88,7 +88,7 @@ const showDetail = () => {
 .building {
     width: 100%;
     background-color: #f5f5f5;
-    height: 100%;
+    min-height: 100vh;
 
     .building-part {
         width: 100%;
