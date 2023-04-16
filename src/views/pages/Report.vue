@@ -38,7 +38,7 @@
 </template>
 <script setup>
 import router from '../../router'
-import { showSuccessToast, showToast } from 'vant';
+import { showFailToast, showSuccessToast, showToast } from 'vant';
 import { ref, reactive, getCurrentInstance, onMounted } from 'vue'
 const { proxy } = getCurrentInstance()
 const reportForm = reactive({
@@ -64,6 +64,7 @@ const onSubmit = async () => {
     const res = await proxy.$api.report.uploadImg(pic)
     if (res.code !== 200) return showToast('图片上传异常!')
     const _res = await proxy.$api.report.sendReport({ ...reportForm, pic: res.data.path })
+    if (_res.code === 429) return showFailToast(_res.msg)
     if (_res.code !== 200) return showToast('申报失败！')
     showSuccessToast('申报成功')
     router.replace('/home')
