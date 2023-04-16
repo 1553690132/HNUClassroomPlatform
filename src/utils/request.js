@@ -29,6 +29,11 @@ axios.interceptors.response.use(response => {
         localStorage.removeItem('token')
         return error.response
     }
+    // 请求多次
+    if (error.response.status === 429) {
+        showToast('请勿多次提交，服务超时！')
+        return error.response
+    }
     console.log("响应出错", JSON.stringify(error))
     return Promise.reject(error)
 })

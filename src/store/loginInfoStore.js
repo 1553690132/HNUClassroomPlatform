@@ -11,7 +11,9 @@ export const loginInfoStore = defineStore('loginInfoStore', {
                     const userStore = userInfoStore()
                     localStorage.setItem('token', res.data.token)
                     const { userInfo } = await api.login.getUserInfo()
-                    userStore.userInfo = { ...userInfo }
+                    userStore.userInfo = { ...userInfo, isFirstLogin: res.data.isFirstLogin }
+                    sessionStorage.setItem('isFirstLogin', res.data.isFirstLogin)
+                    sessionStorage.setItem('studentId', userInfo.studentId)
                 }
             } catch (error) {
                 throw new Error(error)

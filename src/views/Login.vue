@@ -34,17 +34,27 @@
 
 <script setup>
 import { ref } from 'vue'
-import { loginInfoStore } from '../store/loginInfoStore'
 import router from '../router'
+import { loginInfoStore } from '../store/loginInfoStore'
+import { userInfoStore } from '../store/userInfoStore'
 import { showSuccessToast, showFailToast } from 'vant'
+import { showDialog } from 'vant'
 const loginStore = loginInfoStore()
+const userStore = userInfoStore()
 const username = ref('');
 const password = ref('');
 const onSubmit = async (values) => {
     await loginStore.getLoginInfos(values)
     if (localStorage.getItem('token')) {
         showSuccessToast('登录成功')
-        router.replace('/home/message')
+        if (userStore.userInfo.isFirstLogin) {
+            showDialog({
+                message: '由于您是第一次登录，须立即进行密码修改。',
+            }).then(() => {
+                router.replace('/configPwd')
+            });
+        }
+        else router.replace('/home/message')
     } else {
         sessionStorage.getItem('errorType') ? showFailToast(sessionStorage.getItem('errorType')) : showFailToast('服务器异常，请稍后再试!')
     }

@@ -10,6 +10,7 @@ import Report from '../views/pages/Report.vue'
 import Personal from '../views/Personal.vue'
 import CheckReport from '../views/pages/CheckReport.vue'
 import ReportDetail from '../views/pages/ReportDetail.vue'
+import ConfigPwd from '../views/pages/ConfigPwd.vue'
 
 const router = new createRouter({
     routes: [
@@ -74,9 +75,20 @@ const router = new createRouter({
             path: '/reportDetail',
             component: ReportDetail,
             name: 'ReportDetail'
+        },
+        {
+            path: '/configPwd',
+            component: ConfigPwd,
+            name: 'ConfigPwd'
         }
     ],
     history: createWebHashHistory()
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.path === '/configPwd') return next()
+    if (Boolean(sessionStorage.getItem('isFirstLogin'))) return next('/configPwd')
+    else next()
 })
 
 export default router

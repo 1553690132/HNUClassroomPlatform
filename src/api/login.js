@@ -8,6 +8,10 @@ const login = {
     async getUserInfo() {
         const { data: res } = await request.get('api/auth/userInfo')
         return res.data
+    },
+    async changePassword(data) {
+        const { data: res } = await request.put('api/auth/changePassword', data)
+        return res
     }
 }
 

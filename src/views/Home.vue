@@ -13,8 +13,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 const active = ref(0)
+onMounted(()=> {
+
+})
 </script>
 
 <style lang="less" scoped>

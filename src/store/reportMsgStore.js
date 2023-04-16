@@ -26,7 +26,8 @@ export const reportMsgStore = defineStore('reportMsgStore', {
             if (detail.isReplied) {
                 detail.replyTime = detail.replyTime.replace('T', ' ')
             }
-            this.chooseReportDetail = { ...detail }
+            this.chooseReportDetail = { ...detail, reportPic:  'http://localhost:12350' + detail.reportPic }
+            console.log(detail.reportPic);
         },
 
         clearStatus() {

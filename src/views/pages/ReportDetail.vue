@@ -4,12 +4,11 @@
         <van-steps class="steps" :active="active" active-icon="success" active-color="#07c160">
             <van-step>申报上传</van-step>
             <van-step>校方审核</van-step>
-            <van-step>审核回复</van-step>
             <van-step>申报完成</van-step>
         </van-steps>
         <div class="details">
             <van-tabs v-model:active="activeName">
-                <van-tab title="详情" name="detail">
+                <van-tab title="详情" name="detail" ref="details">
                     <van-cell-group>
                         <van-cell title="教室名" :value="reportStore.chooseReportDetail.classroomId" />
                         <van-cell title="申报简述" :value="reportStore.chooseReportDetail.brief" />
@@ -20,9 +19,11 @@
                             </template>
                         </van-cell>
                         <van-cell title="故障情况" :value="reportStore.chooseReportDetail.details" />
-                        <van-cell title="故障图片">
+                        <van-cell title="故障图片" ref="reportImg">
                             <template #value>
-                                <van-image width="100" height="100" :src="reportStore.chooseReportDetail.reportPic" />
+                                <van-image ref="reportImg" width="100" height="100"
+                                    :src="reportStore.chooseReportDetail.reportPic"
+                                    @click="previews(reportStore.chooseReportDetail.reportPic)" @load="loads" />
                             </template>
                         </van-cell>
                         <van-cell title="申报人" :value="reportStore.chooseReportDetail.reporter" />
@@ -31,13 +32,13 @@
                 </van-tab>
                 <van-tab title="回复" name="reply">
                     <van-empty image="error" description="暂无回复" v-if="!reportStore.chooseReportDetail.isReplied" />
-
                     <van-cell-group v-else>
                         <van-cell title="回复人" :value="reportStore.chooseReportDetail.respondent" />
                         <van-cell title="回复文字" :value="reportStore.chooseReportDetail.content" />
                         <van-cell title="回复图片">
                             <template #value>
-                                <van-image width="100" height="100" :src="reportStore.chooseReportDetail.replyPic" />
+                                <van-image width="100" height="100" :src="reportStore.chooseReportDetail.replyPic"
+                                    @click="previews(reportStore.chooseReportDetail.reportPic)" />
                             </template>
                         </van-cell>
                         <van-cell title="回复时间" :value="reportStore.chooseReportDetail.replyTime" />
@@ -49,11 +50,24 @@
 </template>
 <script setup>
 import router from '../../router';
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { reportMsgStore } from '../../store/reportMsgStore';
+import { showImagePreview } from 'vant';
+import { toBase64 } from '../../utils/common'
 const reportStore = reportMsgStore()
-const active = ref(1), activeName = ref('detail')
+const activeName = ref('detail')
+const active = computed(() => {
+    return reportStore.chooseReportDetail.isReplied ? 2 : 1
+})
 const onClickLeft = () => { router.back() }
+const previews = (src) => {
+    showImagePreview([src])
+}
+const reportImg = ref(null)
+const loads = (e) => {
+    const src = toBase64(e.target)
+    console.log(src)
+}
 </script>
 <style lang="less" scoped>
 .reportDetail {
