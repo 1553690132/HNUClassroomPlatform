@@ -26,7 +26,7 @@ export const reportMsgStore = defineStore('reportMsgStore', {
             if (detail.isReplied) {
                 detail.replyTime = detail.replyTime.replace('T', ' ')
             }
-            this.chooseReportDetail = { ...detail, reportPic: 'http://api.cms.pdteam.cn' + detail.reportPic }
+            this.chooseReportDetail = { ...detail, reportPic: process.env.VITE_APP_BASE_URL + detail.reportPic }
             console.log(detail.reportPic);
         },
 
