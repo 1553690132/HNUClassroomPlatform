@@ -9,7 +9,7 @@
 
                     <van-field v-model="typeText" is-link readonly name="picker" label="故障类型" placeholder="点击选择故障类型"
                         @click="showPicker = true" />
-                    <van-popup v-model:show="showPicker" position="bottom">
+                    <van-popup v-model:show="showPicker" position="bottom" title="故障类型">
                         <van-picker :columns="types" @confirm="onConfirm" @cancel="showPicker = false" />
                     </van-popup>
 
@@ -41,8 +41,8 @@ import router from '../../router'
 import { showFailToast, showSuccessToast, showToast } from 'vant';
 import { ref, reactive, getCurrentInstance, onMounted } from 'vue'
 const { proxy } = getCurrentInstance()
-const reportForm = reactive({
-    classroomId: 1, // 之后通过token获取
+let reportForm = sessionStorage.getItem('reportForm') ? reactive({ ...JSON.parse(sessionStorage.getItem('reportForm')) }) : reactive({
+    classroomId: 1,
     typeId: '',
     brief: '',
     details: '',
@@ -57,7 +57,8 @@ const onConfirm = ({ selectedOptions }) => {
     showPicker.value = false
     reportForm.typeId = selectedOptions[0].value
     typeText.value = selectedOptions[0].text
-};
+    sessionStorage.setItem('selectedOptions', JSON.stringify(selectedOptions[0]))
+}
 
 const onSubmit = async () => {
     const pic = reportForm.pic.map(p => p = p.file)[0]
@@ -77,11 +78,17 @@ const getReportType = async () => {
     types.sort((a, b) => {
         return a.id - b.id
     })
-    console.log(types)
 }
-
+const loadHistory = () => {
+    sessionStorage.getItem('selectedOptions') ? typeText.value = JSON.parse(sessionStorage.getItem('selectedOptions')).text : null
+    window.onbeforeunload = function () {
+        showToast('刷新页面会导致图片丢失!')
+        sessionStorage.setItem('reportForm', JSON.stringify({ ...reportForm, pic: [] }))
+    }
+}
 onMounted(async () => {
     await getReportType()
+    loadHistory()
 })
 </script>
 

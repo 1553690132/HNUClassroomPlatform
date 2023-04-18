@@ -10,12 +10,13 @@ export const loginInfoStore = defineStore('loginInfoStore', {
                 if (res.hasOwnProperty('data')) {
                     const userStore = userInfoStore()
                     localStorage.setItem('token', res.data.token)
-                    const { userInfo } = await api.login.getUserInfo()
+                    const { userInfo, type } = await api.login.getUserInfo()
                     if (res.data.isFirstLogin) {
                         userStore.userInfo = { ...userInfo, isFirstLogin: res.data.isFirstLogin }
                         sessionStorage.setItem('isFirstLogin', res.data.isFirstLogin)
                     }
                     else userStore.userInfo = { ...userInfo }
+                    userStore.type = type
                     sessionStorage.setItem('studentId', userInfo.studentId)
                 }
             } catch (error) {

@@ -87,6 +87,11 @@ const router = new createRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.path === '/configPwd') return next()
+    if (from.path === '/report') {
+        sessionStorage.removeItem('reportForm')
+        sessionStorage.removeItem('selectedOptions')
+        return next()
+    }
     if (Boolean(sessionStorage.getItem('isFirstLogin'))) return next('/configPwd')
     else next()
 })

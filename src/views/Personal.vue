@@ -10,7 +10,7 @@
                     <div class="info-part">
                         <h2>{{ userStore.userInfo.name }}</h2>
                         <div class="details">
-                            <p>学号:{{ userStore.userInfo.studentId }}</p>
+                            <p>{{ typeName }}:{{ userStore.userInfo.studentId }}</p>
                             <p>{{ userStore.userInfo.academy }}</p>
                             <p>{{ userStore.userInfo.class }}</p>
                         </div>
@@ -50,11 +50,12 @@
 
 <script setup>
 import router from '../router';
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 import { getImageUrl } from '../utils/common'
 import { userInfoStore } from '../store/userInfoStore'
 const userStore = userInfoStore()
 const repair_src = getImageUrl('btn_one'), bg_f_img = getImageUrl('bg_first'), bg_s_img = getImageUrl('bg_second')
+const typeName = computed(() => { return userStore.type === 'student' ? '学号' : '工号' })
 const toCheckReport = () => {
     router.push('/check')
 }

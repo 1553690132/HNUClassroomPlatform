@@ -4,6 +4,7 @@ import { showToast } from 'vant'
 axios.defaults.timeout = 300000000
 // axios.defaults.baseURL = "http://172.16.2.2:12350/"
 axios.defaults.baseURL = "http://localhost:12350/"
+// axios.defaults.baseURL = "http://api.cms.pdteam.cn/"
 axios.defaults.withCredentials = true
 
 axios.interceptors.request.use(config => {

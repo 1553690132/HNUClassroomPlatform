@@ -4,14 +4,16 @@ import api from '../api'
 export const userInfoStore = defineStore('userInfoStore', {
     state: () => {
         return {
-            userInfo: {}
+            userInfo: {},
+            type: ''
         }
     },
 
     actions: {
         async getUserInfos() {
-            const { userInfo } = await api.login.getUserInfo()
+            const { userInfo, type } = await api.login.getUserInfo()
             this.userInfo = { ...userInfo }
+            this.type = type
         }
     }
 })

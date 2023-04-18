@@ -6,7 +6,7 @@
                 <h2>欢迎使用教室平台</h2>
             </div>
             <div class="right-img">
-                <img src="../assets/img/header.png" alt="header">
+                <img :src="login_img" alt="header">
             </div>
         </div>
         <div class="login-body">
@@ -39,14 +39,17 @@ import { loginInfoStore } from '../store/loginInfoStore'
 import { userInfoStore } from '../store/userInfoStore'
 import { showSuccessToast, showFailToast } from 'vant'
 import { showDialog } from 'vant'
+import { getImageUrl } from '../utils/common'
 const loginStore = loginInfoStore()
 const userStore = userInfoStore()
 const username = ref('');
 const password = ref('');
+const login_img = getImageUrl('header')
 const onSubmit = async (values) => {
     await loginStore.getLoginInfos(values)
     if (localStorage.getItem('token')) {
         showSuccessToast('登录成功')
+        sessionStorage.setItem('type', userStore.type)
         if (userStore.userInfo.isFirstLogin) {
             showDialog({
                 message: '由于您是第一次登录，须立即进行密码修改。',

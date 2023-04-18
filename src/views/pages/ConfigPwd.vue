@@ -4,7 +4,7 @@
         <div class="config-body">
             <van-form @submit="onSubmit">
                 <van-cell-group inset>
-                    <van-field name="学号" label="学号" :placeholder="configBody.username" disabled />
+                    <van-field :name="typeName" :label="typeName" :placeholder="configBody.username" disabled />
                     <van-field v-model="configBody.oldPassword" type="password" name="旧密码" label="旧密码" placeholder="请输入旧密码"
                         :rules="[{ required: true, message: '请填写旧密码' }]" />
                     <van-field v-model="configBody.newPassword" type="password" name="密码" label="密码" placeholder="请输入密码"
@@ -23,11 +23,12 @@
 
 <script setup>
 import router from '../../router';
-import { reactive, getCurrentInstance, onMounted } from 'vue';
+import { reactive, getCurrentInstance, onMounted, computed } from 'vue';
 import { userInfoStore } from '../../store/userInfoStore';
 import { showFailToast, showSuccessToast } from 'vant';
 const userStore = userInfoStore()
 const { proxy } = getCurrentInstance()
+const typeName = computed(() => { return sessionStorage.getItem('type') === 'student' ? '学号' : '工号' })
 const validator = val => { return val === configBody.newPassword }
 const configBody = reactive({
     username: sessionStorage.getItem('studentId'),
