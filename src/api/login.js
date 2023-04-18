@@ -1,7 +1,9 @@
 import request from '../utils/request'
+import encode from '../utils/encode'
 
 const login = {
     async loginProcess(data) {
+        console.log(encodeURIComponent(encode.encodeRSA(data.password, null)))
         const { data: res } = await request.post('api/auth/login', data)
         return res
     },
